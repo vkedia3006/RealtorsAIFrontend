@@ -6,7 +6,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "lib": [ "es2015", "DOM" ]
+    "lib": [ "es2015", "DOM" ],
+    "module": "esnext",
+    "moduleResolution": "bundler", 
   },
   "include": ["src/**/*"]
 }
