@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import './styles.css';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthContext';
+import ProtectedRoute from './auth/ProtectedRoute';
+import CallbackPage from './pages/CallbackPage';
+import DashboardPage from './pages/DashboardPage';
+import LoginPage from './pages/LoginPage';
+import SessionExpiredPage from './pages/SessionExpiredPage'; // <-- import this
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/dashboard' element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }/>
+          <Route path='/login-success' element={<CallbackPage />} />
+          <Route path='/session-expired' element={<SessionExpiredPage />} /> {/* <-- new route */}
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
-}
+};
 
 export default App;
